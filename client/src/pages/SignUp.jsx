@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 function SignUp() {
   const [formData,setFormData]=useState({})
   const [loading,setLoading] = useState(false)
@@ -8,13 +8,15 @@ function SignUp() {
   const handleChange=(e)=>{
     setFormData({...formData,[e.target.id]: e.target.value })
   }
-  console.log(formData)
+  // console.log(formData)
+  const navigate=useNavigate()
   const handleSubmit=async (e)=>{
       e.preventDefault();
       setLoading(true)
       await axios.post('http://localhost:8555/api/user/signup',formData)
       .then((res)=>{
         console.log("success full")
+        navigate('/sign-in')
         setError(false)
       })
       .catch((err)=>{
