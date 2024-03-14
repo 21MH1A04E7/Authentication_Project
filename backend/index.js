@@ -18,8 +18,19 @@ connecteMongoDb(process.env.MOGOLOCAURL)
 })
 .catch(err=>console.log('error connecting',err))
 
+//error middleware
+app.use((err,req,res,next)=>{
+    const statusCode=err.statusCode ||500;
+    const message=err.message||'Internal Server Error';
+    return res.status(statusCode).json({
+        success:false,
+        message,
+        statusCode
+    })
+})
 app.use('/api/user',userRouter)
 app.use('/api/user',authRouter)
+
 
 app.listen(8555,()=>{
     console.log('listening on http://localhost//8555')
