@@ -5,11 +5,13 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 import userRouter from './routes/user_route.js'
 import authRouter from './routes/auth_route.js'
+import cors from 'cors';
 
 dotenv.config()
 
 const app= express();
 app.use(bodyParser.json())
+app.use(cors())
 // app.use(express.json())
 
 connecteMongoDb(process.env.MOGOLOCAURL)
